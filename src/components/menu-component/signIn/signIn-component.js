@@ -1,15 +1,16 @@
 import React from "react";
+import { signInWithGoogle } from "../../../firabase.utils";
 import CustomButton from "../custom-buttton/custom-button-components";
 import FormInput from "../form-input/form-input-component";
 import "./signIn-styles.scss";
 
 class SignIn extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      Email: "",
-      Password: "",
+      Email: " ",
+      Password: " ",
     };
   }
   handleChange = (event) => {
@@ -30,8 +31,8 @@ class SignIn extends React.Component {
           <FormInput
             name="Email"
             type="email"
-            value={this.state.Email}
             handleChange={this.handleChange}
+            value={this.state.Email}
             label="Email"
             required
           />
@@ -43,7 +44,13 @@ class SignIn extends React.Component {
             label="Password"
             required
           />
-          <CustomButton type="submit">Sign In</CustomButton>
+          <div className="buttons">
+            {" "}
+            <CustomButton type="submit">Sign In</CustomButton>
+            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+              Sign In with Google
+            </CustomButton>
+          </div>
         </form>
       </div>
     );

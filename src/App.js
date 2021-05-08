@@ -5,7 +5,7 @@ import ShopData from "./pages/homepage/shop/shop-components";
 import Header from "./components/menu-component/header/header-component";
 import SignInSignUpPage from "./pages/homepage/sign-in-sign-up/sign-in-sign-up-components";
 import React from "react";
-import { auth } from "./firabase.utils";
+import { auth, createUserData } from "./firabase.utils";
 class App extends React.Component {
   constructor() {
     super();
@@ -16,9 +16,20 @@ class App extends React.Component {
   }
   unSebscribedAuth = null;
   componentDidMount() {
-    this.unSebscribedAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unSebscribedAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserData(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
+          });
+        });
+      }
+      this.setState({ currentUser: userAuth });
     });
   }
   componentWillUnmount() {

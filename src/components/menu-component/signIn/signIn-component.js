@@ -1,5 +1,5 @@
 import React from "react";
-import { signInWithGoogle } from "../../../firabase.utils";
+import { auth, signInWithGoogle } from "../../../firabase.utils";
 import CustomButton from "../custom-buttton/custom-button-components";
 import FormInput from "../form-input/form-input-component";
 import "./signIn-styles.scss";
@@ -18,9 +18,15 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    this.setState({ Email: " ", Password: " " });
+    const { Email, Password } = this.state;
+    try {
+      await auth.signInWithEmailAndPassword(Email, Password);
+      this.setState({ Email: " ", Password: " " });
+    } catch (error) {
+      console.log("Error in Login" + error);
+    }
   };
   render() {
     return (

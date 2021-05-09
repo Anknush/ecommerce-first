@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../../assets/crown.svg";
+import { connect } from "react-redux";
 import { auth } from "../../../firabase.utils";
 import "./header-styles.scss";
 const Header = ({ currentUser }) => (
@@ -27,5 +28,8 @@ const Header = ({ currentUser }) => (
     </div>
   </div>
 );
+const reduxState = (state) => ({
+  currentUser: state.user.currentUser,
+});
 
-export default Header;
+export default connect(reduxState)(Header);

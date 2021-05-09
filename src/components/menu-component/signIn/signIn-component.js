@@ -9,8 +9,8 @@ class SignIn extends React.Component {
     super(props);
 
     this.state = {
-      Email: " ",
-      Password: " ",
+      Email: "",
+      Password: "",
     };
   }
   handleChange = (event) => {
@@ -23,7 +23,7 @@ class SignIn extends React.Component {
     const { Email, Password } = this.state;
     try {
       await auth.signInWithEmailAndPassword(Email, Password);
-      this.setState({ Email: " ", Password: " " });
+      this.setState({ Email: "", Password: "" });
     } catch (error) {
       console.log("Error in Login" + error);
     }

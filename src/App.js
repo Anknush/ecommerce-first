@@ -5,31 +5,25 @@ import ShopData from "./pages/homepage/shop/shop-components";
 import Header from "./components/menu-component/header/header-component";
 import SignInSignUpPage from "./pages/homepage/sign-in-sign-up/sign-in-sign-up-components";
 import React from "react";
+import { connect } from "react-redux";
 import { auth, createUserData } from "./firabase.utils";
+import { setCurrentUser } from "./redux/user/user.actions";
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null,
-    };
-  }
   unSebscribedAuth = null;
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     this.unSebscribedAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserData(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            },
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
           });
         });
       }
-      this.setState({ currentUser: userAuth });
+      setCurrentUser(userAuth);
     });
   }
   componentWillUnmount() {
@@ -38,7 +32,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopData} />
@@ -49,4 +43,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchProps)(App);

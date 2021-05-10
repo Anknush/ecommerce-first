@@ -4,7 +4,9 @@ import { ReactComponent as Logo } from "../../../assets/crown.svg";
 import { connect } from "react-redux";
 import { auth } from "../../../firabase.utils";
 import "./header-styles.scss";
-const Header = ({ currentUser }) => (
+import ShoppingCarts from "../cart-icon/cart-icon.components";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -25,11 +27,14 @@ const Header = ({ currentUser }) => (
           SIGN IN
         </Link>
       )}
+      <ShoppingCarts />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
-const reduxState = (state) => ({
-  currentUser: state.user.currentUser,
+const reduxState = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
 });
 
 export default connect(reduxState)(Header);

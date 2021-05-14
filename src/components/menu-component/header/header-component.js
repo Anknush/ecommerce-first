@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../../assets/crown.svg";
+import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { auth } from "../../../firabase.utils";
 import "./header-styles.scss";
 import ShoppingCarts from "../cart-icon/cart-icon.components";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { selectUserNotify } from "../../../redux/user/user.selector";
+import { selectCartHidden } from "../../../redux/cart/cart-item.selector";
 const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
@@ -32,9 +35,9 @@ const Header = ({ currentUser, hidden }) => (
     {hidden ? null : <CartDropdown />}
   </div>
 );
-const reduxState = ({ user: { currentUser }, cart: { hidden } }) => ({
-  currentUser,
-  hidden,
+const reduxState = createStructuredSelector({
+  currentUser: selectUserNotify,
+  hidden: selectCartHidden,
 });
 
 export default connect(reduxState)(Header);

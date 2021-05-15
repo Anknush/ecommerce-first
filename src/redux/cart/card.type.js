@@ -1,4 +1,6 @@
 export const CardType = {
   cardType: "CARD_ON_TOGGLE",
   ADD_ITEMS: "ADD_ITEMS",
+  REMOVE_ITEM_FROM_CART: "REMOVE_ITEM_FROM_CART:",
+  REMOVE_ITEM: "REMOVE_ITEM",
 };

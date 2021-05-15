@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { auth, createUserData } from "./firabase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
 import CheckOut from "./pages/homepage/checkout/checkOut.component";
+
 class App extends React.Component {
   unSebscribedAuth = null;
   componentDidMount() {

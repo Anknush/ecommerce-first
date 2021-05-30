@@ -12,7 +12,7 @@ import {
   LogoContainer,
   OptionsContainer,
   OptionLink,
-} from "./header.styles";
+} from "./header.styles.jsx";
 const Header = ({ currentUser, hidden }) => (
   <HeaderContainer>
     <LogoContainer to="/">
